@@ -1,0 +1,559 @@
+[
+  {
+    "name": "voc-2007-classification",
+    "description": "Voc2007 classification dataset.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multilabel",
+    "root_folder": "classification/voc2007_20211007",
+    "train": {
+      "index_path": "train_ic.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 2501
+    },
+    "val": {
+      "index_path": "val_ic.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 2510
+    },
+    "test": {
+      "index_path": "test_ic.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 4952
+    },
+    "labelmap": "labels.txt",
+    "num_classes": 20
+  },
+  {
+    "name": "gtsrb",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "The German Traffic Sign Recognition Benchmark (GTSRB) is a multi-class image classification benchmark in the domain of advanced driver assistance systems and autonomous driving. It was first published at IJCNN 2011.",
+    "root_folder": "classification/gtsrb_20210923",
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 26640
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 12569
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "final_test.zip"
+      ],
+      "num_images": 12630
+    },
+    "num_classes": 43,
+    "labelmap": "labelmap.txt"
+  },
+  {
+    "name": "country211",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "Country211 is an internal OpenAI dataset designed to assess the geolocation capability of visual representations. It filters the YFCC100m dataset (Thomee et al., 2016) to find 211 countries (defined as having an ISO-3166 country code) that have at least 300 photos with GPS coordinates. OpenAI built a balanced dataset with 211 categories, by sampling 200 photos for training and 100 photos for testing, for each country.",
+    "root_folder": "classification/country211_20210924",
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 31650
+    },
+    "val": {
+      "index_path": "valid.txt",
+      "files_for_local_usage": [
+        "valid.zip"
+      ],
+      "num_images": 10550
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 21100
+    },
+    "num_classes": 211,
+    "labelmap": "labels.txt"
+  },
+  {
+    "name": "rendered-sst2",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "Dataset is from CLIP: The Rendered SST2 dataset is designed to measure the optical character recognition capability of visual representations. To do so, we used the sentences from the Stanford Sentiment Treebank dataset (Socher et al., 2013) and rendered them into images, with black texts on a white background, in a 448×448 resolution.",
+    "root_folder": "classification/rendered_sst2_20210924",
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 6920
+    },
+    "val": {
+      "index_path": "valid.txt",
+      "files_for_local_usage": [
+        "valid.zip"
+      ],
+      "num_images": 827
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 1821
+    },
+    "num_classes": 2,
+    "labelmap": "labels.txt"
+  },
+  {
+    "name": "kitti-distance",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "The kitti-distance dataset was taken from the VTAB benchmark, and the task was to predict how distant a vehicle is in the photo. More details: https://github.com/openai/CLIP/issues/86",
+    "format": "coco",
+    "root_folder": "classification/kitti_distance_20210923",
+    "train": {
+      "index_path": "train_meta.json",
+      "files_for_local_usage": [
+        "train_images.zip"
+      ],
+      "num_images": 6347
+    },
+    "val": {
+      "index_path": "validation_meta.json",
+      "files_for_local_usage": [
+        "validation_images.zip"
+      ],
+      "num_images": 423
+    },
+    "test": {
+      "index_path": "test_meta.json",
+      "files_for_local_usage": [
+        "test_images.zip"
+      ],
+      "num_images": 711
+    },
+    "num_classes": 4
+  },
+  {
+    "name": "eurosat_clip",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "Dataset sampled by CLIP from Eurosat (EuroSAT dataset is based on Sentinel-2 satellite images covering 13 spectral bands and consisting of 10 classes with 27000 labeled and geo-referenced samples.), see: https://github.com/openai/CLIP/issues/45 ",
+    "root_folder": "classification/eurosat_clip_20210930",
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "2750.zip"
+      ],
+      "num_images": 5000
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "2750.zip"
+      ],
+      "num_images": 5000
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "2750.zip"
+      ],
+      "num_images": 5000
+    },
+    "num_classes": 10,
+    "labelmap": "labels.txt"
+  },
+  {
+    "name": "resisc45_clip",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "Dataset sampled by CLIP, see: https://github.com/openai/CLIP/issues/45. RESISC45 dataset is a publicly available benchmark for Remote Sensing Image Scene Classification",
+    "format": "coco",
+    "root_folder": "classification/resisc45_clip_20210924",
+    "train": {
+      "index_path": "train.json",
+      "files_for_local_usage": [
+        "images.zip"
+      ],
+      "num_images": 3150
+    },
+    "val": {
+      "index_path": "val.json",
+      "files_for_local_usage": [
+        "images.zip"
+      ],
+      "num_images": 3150
+    },
+    "test": {
+      "index_path": "test.json",
+      "files_for_local_usage": [
+        "images.zip"
+      ],
+      "num_images": 25200
+    },
+    "num_classes": 45
+  },
+  {
+    "name": "caltech-101",
+    "description": "Pictures of objects belonging to 101 categories. About 40 to 800 images per category. Most categories have about 50 images. Collected in September 2003 by Fei-Fei Li, Marco Andreetto, and Marc 'Aurelio Ranzato.  The size of each image is roughly 300 x 200 pixels. ",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/caltech_101_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 102,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 3060
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 6084
+    }
+  },
+  {
+    "name": "cifar-10",
+    "description": "The CIFAR-10 dataset consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/cifar_10_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 10,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 50000
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 10000
+    }
+  },
+  {
+    "name": "cifar-100",
+    "description": "This dataset is just like the CIFAR-10, except it has 100 classes containing 600 images each. There are 500 training images and 100 testing images per class. The 100 classes in the CIFAR-100 are grouped into 20 superclasses. Each image comes with a 'fine' label (the class to which it belongs) and a 'coarse' label (the superclass to which it belongs).",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/cifar100_20200721",
+    "labelmap": "labels.txt",
+    "num_classes": 100,
+    "train": {
+      "index_path": "train_images.txt",
+      "files_for_local_usage": [
+        "train_images.zip"
+      ],
+      "num_images": 50000
+    },
+    "test": {
+      "index_path": "test_images.txt",
+      "files_for_local_usage": [
+        "test_images.zip"
+      ],
+      "num_images": 10000
+    }
+  },
+  {
+    "name": "dtd",
+    "description": "The Describable Textures Dataset (DTD) is an evolving collection of textural images in the wild, annotated with a series of human-centric attributes, inspired by the perceptual properties of textures. This data is made available to the computer vision community for research purposes.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/dtd_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 47,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 1880
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 1880
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 1880
+    }
+  },
+  {
+    "name": "fgvc-aircraft-2013b-variants102",
+    "description": "Fine-Grained Visual Classification of Aircraft (FGVC-Aircraft) is a benchmark dataset for the fine grained visual categorization of aircraft.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/fgvc_aircraft_2013b_variants102_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 100,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 3334
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 3333
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 3333
+    }
+  },
+  {
+    "name": "food-101",
+    "description": "This dataset consists of 101 food categories, with 101000 images. For each class, 250 manually reviewed test images are provided as well as 750 training images. On purpose, the training images were not cleaned, and thus still contain some amount of noise. This comes mostly in the form of intense colors and sometimes wrong labels. All images were rescaled to have a maximum side length of 512 pixels.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/food_101_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 101,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 75750
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 25250
+    }
+  },
+  {
+    "name": "mnist",
+    "description": "The MNIST database of handwritten digits, available from this page, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/mnist_20211008",
+    "labelmap": "labels.txt",
+    "num_classes": 10,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 60000
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 10000
+    }
+  },
+  {
+    "name": "oxford-flower-102",
+    "description": "A dataset consisting of 102 flower categories. The flowers chosen to be flower commonly occuring in the United Kingdom. Each class consists of between 40 and 258 images.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/oxford_flower_102_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 102,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 1020
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 1020
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 6149
+    }
+  },
+  {
+    "name": "oxford-iiit-pets",
+    "description": "A 37-category pet dataset with roughly 200 images for each class. The images have a large variations in scale, pose and lighting.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/oxford_iiit_pets_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 37,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 3680
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 3669
+    }
+  },
+  {
+    "name": "patch-camelyon",
+    "description": "The PatchCamelyon benchmark is a new and challenging image classification dataset. It consists of 327.680 color images (96 x 96px) extracted from histopathologic scans of lymph node sections. Each image is annoted with a binary label indicating presence of metastatic tissue. PCam provides a new benchmark for machine learning models: bigger than CIFAR10, smaller than imagenet, trainable on a single GPU.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/patch_camelyon_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 2,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 262144
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "validation.zip"
+      ],
+      "num_images": 32768
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 32768
+    }
+  },
+  {
+    "name": "stanford-cars",
+    "description": "The Cars dataset contains 16,185 images of 196 classes of cars. The data is split into 8,144 training images and 8,041 testing images, where each class has been split roughly in a 50-50 split. Classes are typically at the level of Make, Model, Year, e.g. 2012 Tesla Model S or 2012 BMW M3 coupe.",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/stanford_cars_20211007",
+    "labelmap": "labels.txt",
+    "num_classes": 196,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 8144
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 8041
+    }
+  },
+  {
+    "name": "fer-2013",
+    "description": "The data consists of 48x48 pixel grayscale images of faces. The task is to categorize each face based on the emotion shown in the facial expression into one of seven categories (0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral).",
+    "contact": "pinjin",
+    "version": 1,
+    "type": "classification_multiclass",
+    "root_folder": "classification/fer_2013_20211008",
+    "labelmap": "labels.txt",
+    "num_classes": 7,
+    "train": {
+      "index_path": "train.txt",
+      "files_for_local_usage": [
+        "train.zip"
+      ],
+      "num_images": 28709
+    },
+    "val": {
+      "index_path": "val.txt",
+      "files_for_local_usage": [
+        "val.zip"
+      ],
+      "num_images": 3589
+    },
+    "test": {
+      "index_path": "test.txt",
+      "files_for_local_usage": [
+        "test.zip"
+      ],
+      "num_images": 3589
+    }
+  },
+  {
+    "name": "hateful-memes",
+    "version": 1,
+    "type": "classification_multiclass",
+    "description": "At the massive scale of the internet, the task of detecting multimodal hate is both extremely important and particularly difficult. Relying on just text or just images to determine whether a meme is hateful is insufficient. By using certain types of images, text, or combinations, a meme can become a multimodal type of hate speech.",
+    "format": "coco",
+    "root_folder": "classification/hateful_memes_20211014",
+    "train": {
+      "index_path": "train_meta.json",
+      "files_for_local_usage": [
+        "img.zip"
+      ],
+      "num_images": 8500
+    },
+    "test": {
+      "index_path": "test_meta.json",
+      "files_for_local_usage": [
+        "img.zip"
+      ],
+      "num_images": 500
+    },
+    "num_classes": 2
+  },
+]
