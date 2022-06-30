@@ -520,7 +520,7 @@ def construct_dataloader(config, feature_type="image", test_split_only=False):
     hub = get_dataset_hub()
     dataset_names = set([x['name'] for x in hub.list_data_version_and_types()])
     if config.DATASET.DATASET in dataset_names:
-        vision_dataset_storage = 'https://irisdatasets.blob.core.windows.net/share'
+        vision_dataset_storage = 'https://cvinthewildeus.blob.core.windows.net/datasets'
         local_temp = config.DATASET.ROOT
 
         # return [manifest, dataset_info, downloader_resources]
