@@ -130,7 +130,7 @@ def main():
 
         prediction_folder = os.path.join(config.OUTPUT_DIR, 'predictions', exp_name)
         os.makedirs(prediction_folder, exist_ok=True)
-        with open(os.path.join(prediction_folder, f'{config.DATASET.DATASET}.json' ) , 'w') as outfile:
+        with open(os.path.join(prediction_folder, f'seed{config.DATASET.RANDOM_SEED_SAMPLING}_{config.DATASET.DATASET}.json' ) , 'w') as outfile:
             outfile.write(json_string)
 
 
