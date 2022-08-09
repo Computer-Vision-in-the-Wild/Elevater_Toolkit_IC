@@ -302,6 +302,15 @@ def extract_feature(model, data_loader, config):
     model.to(device)
     model.eval()
 
+    # Generate model statistics
+    visual_backbone = model.visual if model.visual is not None else model
+    model_info = config.MODEL.STATS
+    config.defrost()
+    model_info['n_visual_params'] = sum(p.numel() for p in visual_backbone.parameters())
+    model_info['n_backbone_params'] = sum(p.numel() for p in model.parameters())
+    model_info['n_params'] = sum(p.numel() for p in model.parameters())
+    config.freeze()
+
     start = time.time()
     all_features = []
     all_labels = []

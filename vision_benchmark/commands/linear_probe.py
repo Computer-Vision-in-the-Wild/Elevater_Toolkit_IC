@@ -11,6 +11,8 @@ import logging
 import numpy as np
 import random
 
+import os
+
 from vision_benchmark.utils import comm, create_logger
 from vision_benchmark.evaluation import construct_dataloader, full_model_finetune
 from vision_benchmark.config import config, update_config
@@ -35,6 +37,7 @@ def add_linear_probing_args(parser):
     parser.add_argument('--lr', help='Test with a specific learning rate. This option is only useful when option --no-tuning is True.', default=0.001, type=float)
     parser.add_argument('--run', help='Run id', default=1, type=int)
     parser.add_argument('--fix_seed', help='Fix the random seed. [-1] not fixing the seeds', default=0, type=int)
+    parser.add_argument('--save-predictions', help='save predictions logits for analysis.', default=True, action='store_true')
 
     parser.add_argument('opts',
                         help="Modify config options using the command-line",
@@ -102,13 +105,33 @@ def main():
     # Run linear probe
     train_dataloader, val_dataloader, test_dataloader = construct_dataloader(config)
 
-    full_model_finetune(train_dataloader, val_dataloader, test_dataloader, args.no_tuning, args.lr, args.l2, config)
+    best_acc, model_info = full_model_finetune(train_dataloader, val_dataloader, test_dataloader, args.no_tuning, args.lr, args.l2, config)
+    test_predictions = model_info['best_logits']
 
-    test_predictions = None  # submission not supported yet
-    dataset_info = None
+    if args.save_predictions:
+        import json
 
-    if args.submit_predictions and dataset_info and test_predictions:
-        submit_predictions(test_predictions.tolist(), args.submit_by, config, 'linear_probing', dataset_info.type)
+        # a hack to control the json dump float accuracy
+        def json_prec_dump(data, prec=6):
+            return json.dumps(json.loads(json.dumps(data), parse_float=lambda x: round(float(x), prec)))
+
+        results_dict = {
+            'model_name': config.MODEL.NAME,
+            'dataset_name': config.DATASET.DATASET,
+            'num_trainable_params': model_info.get('n_trainable_params', None),
+            'num_params': model_info.get('n_params', None),
+            'num_visual_params': model_info.get('n_visual_params', None),
+            'num_backbone_params': model_info.get('n_backbone_params', None),
+            'n_shot': config.DATASET.NUM_SAMPLES_PER_CLASS,
+            'rnd_seeds': [config.DATASET.RANDOM_SEED_SAMPLING],
+            'predictions': [test_predictions.tolist()],
+        }
+        json_string = json_prec_dump(results_dict)
+
+        prediction_folder = os.path.join(config.OUTPUT_DIR, 'predictions', exp_name)
+        os.makedirs(prediction_folder, exist_ok=True)
+        with open(os.path.join(prediction_folder, f'{config.DATASET.DATASET}.json' ) , 'w') as outfile:
+            outfile.write(json_string)
 
 
 if __name__ == '__main__':

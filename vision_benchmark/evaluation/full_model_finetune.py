@@ -248,6 +248,14 @@ def train_task(train_dataloader, test_dataloader, config, sweep_run=False):
     cudnn.benchmark = config.CUDNN.BENCHMARK
     cudnn.deterministic = config.CUDNN.DETERMINISTIC
 
+    # Generate model statistics
+    model_info = {}
+    visual_backbone = model.backbone.visual if hasattr(model.backbone, 'visual') and model.backbone.visual is not None else model.backbone
+    model_info['n_trainable_params'] = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    model_info['n_visual_params'] = sum(p.numel() for p in visual_backbone.parameters())
+    model_info['n_backbone_params'] = sum(p.numel() for p in model.backbone.parameters())
+    model_info['n_params'] = sum(p.numel() for p in model.parameters())
+
     for epoch in range(config.TRAIN.BEGIN_EPOCH, config.TRAIN.END_EPOCH):
         adjust_learning_rate(optimizer, epoch, config)
 
@@ -256,9 +264,11 @@ def train_task(train_dataloader, test_dataloader, config, sweep_run=False):
             train_one(train_dataloader, model, criterion, optimizer, epoch, config)
 
         # evaluate on validation set
-        acc1 = validate(test_dataloader, model, criterion, epoch, config)
+        acc1, logits = validate(test_dataloader, model, criterion, epoch, config, return_logits=True)
 
         # remember best acc@1 and save checkpoint
+        if acc1 > best_acc1:
+            model_info['best_logits'] = logits
         best_acc1 = max(acc1, best_acc1)
 
     logging.info(f'=> Learning rate {config.TRAIN.LR}, L2 lambda {config.TRAIN.WD}: Best score: Acc@1 {best_acc1:.3f}')
@@ -268,7 +278,11 @@ def train_task(train_dataloader, test_dataloader, config, sweep_run=False):
 
     del model, criterion, optimizer
     gpu_gc()
-    return best_acc1
+
+    if sweep_run:
+        return best_acc1
+    else:
+        return best_acc1, model_info
 
 
 
@@ -332,7 +346,7 @@ def train_one(train_loader, model, criterion, optimizer, epoch, config):
 
 
 @torch.no_grad()
-def validate(val_loader, model, criterion, epoch, config):
+def validate(val_loader, model, criterion, epoch, config, return_logits=False):
     batch_time = AverageMeter()
     metric = get_metric(config.TEST.METRIC)
     metric_name = metric.__name__
@@ -370,7 +384,10 @@ def validate(val_loader, model, criterion, epoch, config):
         metric_result = 0.
     logging.info(f'[Epoch {epoch}] Val: {metric_name} {metric_result:.3f}')
 
-    return metric_result
+    if return_logits:
+        return metric_result, logits
+    else:
+        return metric_result
 
 
 def adjust_learning_rate(optimizer, epoch, config):
@@ -470,5 +487,5 @@ def full_model_finetune(train_dataloader, val_dataloader, test_dataloader, no_hy
     else:
         trainval_dataloader = train_dataloader
         logging.info(f'Using the train set only to train final model. len(dataset)={len(trainval_dataloader.dataset)}')
-    train_task(trainval_dataloader, test_dataloader, config)
+    return train_task(trainval_dataloader, test_dataloader, config)
 

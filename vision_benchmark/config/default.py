@@ -48,6 +48,8 @@ _C.MODEL.SPEC = CN(new_allowed=True)
 _C.MODEL.SPEC.TEXT = CN(new_allowed=True)
 _C.MODEL.SPEC.TEXT.CONTEXT_LENGTH = 77
 
+_C.MODEL.STATS = CN(new_allowed=True)
+
 _C.KNOWLEDGE = CN(new_allowed=True)
 _C.KNOWLEDGE.WORDNET = CN(new_allowed=True)
 _C.KNOWLEDGE.WORDNET.USE_HIERARCHY = False

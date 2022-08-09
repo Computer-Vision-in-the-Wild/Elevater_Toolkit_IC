@@ -11,9 +11,8 @@ import logging
 
 import numpy as np
 
-from vision_benchmark.common.utils import log_arg_env_config, submit_predictions
+from vision_benchmark.common.utils import log_arg_env_config
 from vision_benchmark.utils import comm, create_logger
-from vision_benchmark.common.constants import get_dataset_hub
 from vision_benchmark.datasets import SimpleTokenizer, HFPTTokenizer
 from vision_benchmark.evaluation import extract_features, extract_text_features, clip_zeroshot_evaluator
 from vision_benchmark.config import config, update_config
@@ -22,14 +21,8 @@ from vision_benchmark.config import config, update_config
 def add_zero_shot_args(parser):
     parser.add_argument('--ds', required=False, help='Evaluation dataset configure file name.', type=str)
     parser.add_argument('--model', required=True, help='Clip model configure file name', type=str)
-
-    parser.add_argument('--submit-predictions', help='submit predictions and model info to leaderboard.', default=False, action='store_true')
-    parser.add_argument('--submit-by', help='Person who submits the results.', type=str)
     parser.add_argument('--text_feature_only', help='consider text feature or not.', default=False, action='store_true')
-
-    parser.add_argument('--save-predictions', help='save predictions logits for analysis.', default=False, action='store_true')
-
-
+    parser.add_argument('--save-predictions', help='save predictions logits for analysis.', default=True, action='store_true')
     parser.add_argument('opts',
                         help="Modify config options using the command-line",
                         default=None,
@@ -93,9 +86,6 @@ def main():
     config.NAME = ""
     config.freeze()
 
-    if args.submit_predictions:
-        assert args.submit_by
-
     exp_name = 'zeroshot_eval_' + f'wiki_{config.KNOWLEDGE.WIKITIONARY.USE_DEFINITION}_wnh_{config.KNOWLEDGE.WORDNET.USE_HIERARCHY}_wnd_{config.KNOWLEDGE.WORDNET.USE_DEFINITION}_gpt3_{config.KNOWLEDGE.GPT3.USE_GPT3}'
     exp_name += f'agg_{config.KNOWLEDGE.AGGREGATION.MEHTOD}_gpt3count_{config.KNOWLEDGE.AGGREGATION.NUM_GPT3_ITEMS}'
     final_output_dir = create_logger(config, exp_name)
@@ -119,30 +109,23 @@ def main():
         def json_prec_dump(data, prec=6):
             return json.dumps(json.loads(json.dumps(data), parse_float=lambda x: round(float(x), prec)))
 
-        max_label_indices = test_predictions.max(-1)[-1]
-        
-        results_dict = {'result': result, 'test_predictions': test_predictions.cpu().data.numpy().tolist(), 'image_labels': image_labels.tolist(), 'max_label_indices': max_label_indices.cpu().data.numpy().tolist()}
-
-        knowledge_source = {
-            'wiktionary': config.KNOWLEDGE.WIKITIONARY.USE_DEFINITION,
-            'wordnet_hierachy': config.KNOWLEDGE.WORDNET.USE_HIERARCHY,
-            'wordnet_def': config.KNOWLEDGE.WORDNET.USE_DEFINITION,
-            'gpt3': config.KNOWLEDGE.GPT3.USE_GPT3,
-            'gpt3count': config.KNOWLEDGE.AGGREGATION.NUM_GPT3_ITEMS,
+        results_dict = {
+            'model_name': f'CLIP-{config.MODEL.NAME}',
+            'dataset_name': config.DATASET.DATASET,
+            'num_trainable_params': 0,
+            'num_params': config.MODEL.STATS.get('n_params', None),
+            'num_visual_params': config.MODEL.STATS.get('n_visual_params', None),
+            'num_backbone_params': config.MODEL.STATS.get('n_backbone_params', None),
+            'n_shot': 0,
+            'rnd_seeds': [0],
+            'predictions': [test_predictions.cpu().data.numpy().tolist()],
         }
-        results_dict['knowledge_source'] = knowledge_source
-        results_dict['seed'] = 0
-        results_dict['n_train_sample'] = 0
-        results_dict['n_train_params'] = 0
         json_string = json_prec_dump(results_dict)
 
-        with open( os.path.join(config.OUTPUT_DIR, f'{config.DATASET.DATASET}_{exp_name}_predictions.tsv' ) , 'w') as outfile:
+        prediction_folder = os.path.join(config.OUTPUT_DIR, 'predictions', exp_name)
+        os.makedirs(prediction_folder, exist_ok=True)
+        with open(os.path.join(prediction_folder, f'{config.DATASET.DATASET}.json' ) , 'w') as outfile:
             outfile.write(json_string)
-
-    hub = get_dataset_hub()
-    dataset_info = hub.dataset_registry.get_dataset_info(config.DATASET.DATASET)
-    if args.submit_predictions and dataset_info:
-        submit_predictions(test_predictions.tolist(), args.submit_by, config, 'zero_shot', dataset_info.type)
 
 
 if __name__ == '__main__':
