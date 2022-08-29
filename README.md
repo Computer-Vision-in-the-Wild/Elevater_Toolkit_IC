@@ -1,9 +1,11 @@
-# Introduction
+# ELEVATER Image Classification Toolkit
+
+## Introduction
 
 The toolkit for image classification in the benchmark: Evaluation of Language-augmented Visual Task-level Transfer [[ELEVATER]](https://computer-vision-in-the-wild.github.io/ELEVATER/).
 
 
-## Contents
+### Contents
 Please follow the steps below to use this codebase to reproduce the results in the paper, and onboard your own checkpoints & methods.
 
 1. [Installation](#installation)
@@ -15,7 +17,7 @@ Please follow the steps below to use this codebase to reproduce the results in t
 5. [Submit your results to vision leaderboard](#submit-your-results-to-vision-leaderboard)
 
 
-# Installation
+## Installation
 
 Our code base is developed and tested with PyTorch 1.7.0, TorchVision 0.8.0, CUDA 11.0, and Python 3.7.
 
@@ -28,14 +30,14 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-# Datasets
+## Datasets
 
 We support the downstream evaluation of image classification on 20 datasets: `Caltech101`, `CIFAR10`, `CIFAR100`, `Country211`, `DTD`, `EuroSat`, `FER2013`, `FGVCAircraft`, `Food101`, `GTSRB`, `HatefulMemes`, `KittiDistance`, `MNIST`, `Flowers102`, `OxfordPets`, `PatchCamelyon`, `SST2`, `RESISC45`, `StanfordCars`, `VOC2007`.
 
 To evaluate on these datasets, our toolkit *automatically* downloads these datasets once with [`vision-datasets`](https://github.com/microsoft/vision-datasets) and store them locally for the future usage.  You do **NOT** need to explicitly download any datasets. However, if you are interested in downloading all data before running experiments, please refer to [[Data Download]](https://github.com/Computer-Vision-in-the-Wild/DataDownload).
 
 
-# Getting Started
+## Getting Started
 
 ELEVATER benchmark supports three types of the evaluation: zeroshot, linear probe, and finetuning.  We have embodied all three types of the evaluation into a unified launch script: [`run.sh`](run.sh). By specifying different arguments, you may enable different settings, including: 
 
@@ -57,10 +59,21 @@ ELEVATER benchmark supports three types of the evaluation: zeroshot, linear prob
 
 To run the benchmark toolkit, please refer to the instructions in `run.sh` and modify accordingly.  By default, `./run.sh` will run the zeroshot evaluation of the CLIP ViT/B-32 checkpoint on Caltech-101 dataset.
 
+### Launch Multiple Experiments
 
-# Evaluation
+You may need to launch multiple experiments in batch as ELEVATER benchmark contains 20 datasets.  We provide an example script [`run_multi.sh`](run_multi.sh) where you can specify different configurations from command line directly without modifying the shell script.
 
-## Zero-shot Evaluation
+```Shell
+DATASET=caltech101 \
+OUTPUT_DIR=./output/experiment \
+bash run_multi.sh
+```
+
+You can refer to [`run_multi.sh`](run_multi.sh) to add other customizable configurations.  Examples are `dataset` and `output_dir`.
+
+## Evaluation
+
+### Zero-shot Evaluation
 
 Our implementation and prompts are from OpenAI repo: [[Notebook]](https://github.com/openai/CLIP/blob/main/notebooks/Prompt_Engineering_for_ImageNet.ipynb) [[Prompt]](https://github.com/openai/CLIP/blob/main/data/prompts.md).
 
@@ -80,7 +93,7 @@ To evaluate *customized model* for __zeroshot__ evaluation, you need to:
 - Configure model hyperparameters and specify model parameter file in configuration file. See an example here: [`resources/model/clip_example.yaml`](resources/model/clip_example.yaml)
 - Re-run the installation command as mentioned in the beginning.
 
-## Linear Probe and Fine-tuning
+### Linear Probe and Fine-tuning
 
 We use automatic hyperparameter tuning for linear probe and finetuning evaluation.  For details, please refer to Appendix Sec. D of [our paper](https://arxiv.org/abs/2204.08790).
 
@@ -100,12 +113,49 @@ To evaluate *customized model*, you need to:
 - Configure model hyperparameters and specify model parameter file in configuration file. See an example here: `resources/model/example.yaml`
 - Re-run the installation command as mentioned in the beginning.
 
-# Submit your results to vision leaderboard
+## Submit to Leaderboard
 
-TODO
-<!-- Check `vision-leaderboard.md` for details. -->
+Leaderboard submission are supported via [EvalAI](https://eval.ai/web/challenges/challenge-page/1832/overview).  Please first generate the prediction files locally, and then submit the results to Eval AI.  Details are documented as below.
 
-# Citation
+### Generate Prediction Files
+
+**You need to evaluate and generate prediction files for all 20 datasets before submitting to the leaderboard**. However, to test that the pipeline is working correctly, you *can* submit partial evaluation results, but it will **NOT** appear on the leaderboard and display a **FAIL** status.  The partially evaluated results can be found from the link under "Stderr file" column.
+
+To generate the prediction files, follow the steps below:
+
+1. Verify that prediction file submission is supported.  Prediction file generation is only supported after commit `2c7a53c3`.  Please make sure that your local copy of our code base is up-to-date.
+
+2. Generate prediction files for all datasets separately.  Please make sure to modify output folder accordingly so that 20 prediction files for the same configuration will appear within the same folder.
+
+```
+# Modify these two lines accordingly in run.sh
+
+DATASET=caltech101 \
+OUTPUT_DIR=./output/exp_1_submit \
+  bash run_multi.sh
+```
+
+3. Combine all prediction files to a single zip file. Assume `/path_to_predictions` contains all 20 JSON prediction files.  The combined prediction file will be located at `/path_to_predictions/all_predictions.zip`
+
+```Shell
+python commands/prepare_submit.py \
+  --combine_path /path_to_predictions
+```
+
+### Submit to EvalAI
+
+- Go to our [challenge page](https://eval.ai/web/challenges/challenge-page/1832/overview) on EvalAI, and register a team
+- Navigate to ["Submit"](https://eval.ai/web/challenges/challenge-page/1832/submission) tab, and select the corresponding phase (track) for your submission.  Explanation and examples of different phases can be found [here](https://eval.ai/web/challenges/challenge-page/1832/evaluation), and the limitations of the pretrained data for different phases can be found [here](https://eval.ai/web/challenges/challenge-page/1832/phases).
+- Use "Upload file" for "Select submission type" and choose the **combined** prediction file (a **zip** file).
+- Name your submission following the format in the corresponding leaderboard, finish the required Q&A, and click submit.
+- After the submission is uploaded, navigate to [My Submissions](https://eval.ai/web/challenges/challenge-page/1832/my-submission), and choose the phase that you just submitted to.  Your submissions will be evaluated by our remote worker.  Typically the evaluation time for IC will be less than 3 minutes.  If it shows an error, click link under "Stderr file" column to see error messages.  If the evaluation does not start or does not finish 10 minutes after your submission, please contact us.
+- If everything looks correct, click "Show on leaderboard" to make your results appear on the leaderboard and contribute to the community.  Before this, your results will **NOT** be publicly visible.
+
+### View Leaderboard
+
+Navigate to [Leaderboard](https://eval.ai/web/challenges/challenge-page/1832/leaderboard) tab to view all baseline results and results from the community.
+
+## Citation
 
 Please cite our paper as below if you use the ELEVATER benchmark or our toolkit.
 
