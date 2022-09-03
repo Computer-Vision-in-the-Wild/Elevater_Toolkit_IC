@@ -119,7 +119,7 @@ Leaderboard submission are supported via [EvalAI](https://eval.ai/web/challenges
 
 ### Generate Prediction Files
 
-**You need to evaluate and generate prediction files for all 20 datasets before submitting to the leaderboard**. However, to test that the pipeline is working correctly, you *can* submit partial evaluation results, but it will **NOT** appear on the leaderboard and display a **FAIL** status.  The partially evaluated results can be found from the link under "Stderr file" column.
+**You need to evaluate and generate prediction files for all 20 datasets before submitting to the leaderboard**. However, to test that the pipeline is working correctly, you *can* submit partial evaluation results.  The partially evaluated results can be found from the link under "Result file" column.  You may also optionally make them appear on the leaderboard, but the "Average Score" will not be computed as the results are not complete.
 
 To generate the prediction files, follow the steps below:
 
