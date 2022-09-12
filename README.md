@@ -135,7 +135,7 @@ OUTPUT_DIR=./output/exp_1_submit \
   bash run_multi.sh
 ```
 
-3. Combine all prediction files to a single zip file. Assume `/path_to_predictions` contains all 20 JSON prediction files.  The combined prediction file will be located at `/path_to_predictions/all_predictions.zip`
+3. Combine all prediction files to a single zip file. Assume `/path_to_predictions` contains all 20 JSON prediction files (60 files [20 datasets * 3 seeds] for few-shot experiments).  The combined prediction file will be located at `/path_to_predictions/all_predictions.zip`
 
 ```Shell
 python commands/prepare_submit.py \
