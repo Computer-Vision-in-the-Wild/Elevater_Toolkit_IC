@@ -163,7 +163,7 @@ Please cite our paper as below if you use the ELEVATER benchmark or our toolkit.
 @article{li2022elevater,
     title={ELEVATER: A Benchmark and Toolkit for Evaluating Language-Augmented Visual Models},
     author={Li, Chunyuan and Liu, Haotian and Li, Liunian Harold and Zhang, Pengchuan and Aneja, Jyoti and Yang, Jianwei and Jin, Ping and Lee, Yong Jae and Hu, Houdong and Liu, Zicheng and Gao, Jianfeng},
-    journal={arXiv preprint arXiv:2204.08790},
+    journal={Neural Information Processing Systems},
     year={2022}
 }
 ```
