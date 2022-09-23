@@ -259,6 +259,26 @@ def get_model(config, feature_type='image'):
     elif model_name.startswith('mae_'):
         model = mae.get_model(config)
         model.forward = model.forward_features
+    elif model_name.startswith('declip_') or model_name.startswith('slip_') or model_name.startswith('clip_yfcc_'):
+        model = declip.get_model(config)
+        if feature_type == 'image':
+            model.forward = model.encode_image
+        elif feature_type == 'text':
+            model.forward = model.encode_text
+        else:
+            raise Exception('Incorrect model type.')
+        if not config.MODEL.CLIP_FP32:
+            model.half()
+    elif model_name.startswith('filip_') or model_name.startswith('defilip_'):
+        model = declip.get_model(config)
+        if feature_type == 'image':
+            model.forward = model.encode_image_dense
+        elif feature_type == 'text':
+            model.forward = model.encode_text_dense
+        else:
+            raise Exception('Incorrect model type.')
+        if not config.MODEL.CLIP_FP32:
+            model.half()
     elif model_name.startswith('mocov3_'):
         model = mocov3.get_model(config)
         model.forward = model.forward_features
@@ -490,9 +510,13 @@ def extract_text_features(config, tokenizer, args=None, model=None, return_numpy
         else:
             texts = [template.format(classname) + knowledge_text for knowledge_text in knowledge_text_list_aug for template in templates ]
 
-        texts = tokenizer(texts, context_length=config.MODEL.SPEC.TEXT.CONTEXT_LENGTH).to(device)
+        if not config.MODEL.SPEC.TEXT.get('SKIP_TOKENIZE', False):
+            texts = tokenizer(texts, context_length=config.MODEL.SPEC.TEXT.CONTEXT_LENGTH).to(device)
 
-        class_embeddings = model.encode_text(texts)
+        if config.MODEL.SPEC.get('DENSE_EVAL', False):
+            class_embeddings = model.encode_text_dense(texts)
+        else:
+            class_embeddings = model.encode_text(texts)
         class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
         class_embedding = class_embeddings.mean(dim=0)
         class_embedding /= class_embedding.norm()
