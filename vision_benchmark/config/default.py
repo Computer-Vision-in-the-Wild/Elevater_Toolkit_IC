@@ -165,6 +165,7 @@ _C.TRAIN.OPTIMIZER = 'sgd'
 _C.TRAIN.OPTIMIZER_ARGS = CN(new_allowed=True)
 _C.TRAIN.MOMENTUM = 0.9
 _C.TRAIN.WD = 0.0001
+_C.TRAIN.WD_SEARCH_LEFT = False # WD_SEARCH_LEFT is used in the inital release, whereas we later find WD_SEARCH_IDX to be more stable.
 _C.TRAIN.WITHOUT_WD_LIST = []
 _C.TRAIN.NESTEROV = True
 # for adam

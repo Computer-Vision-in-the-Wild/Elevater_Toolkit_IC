@@ -190,7 +190,11 @@ def hyperparameter_sweep(train_dataloader, val_dataloader, config):
         if right != peak_idx:
             search_idx.append(right)
         for idx in search_idx:
-            config.TRAIN.WD = l2_lambda_list[left]
+            # WD_SEARCH_LEFT is used in the inital release, whereas we later find WD_SEARCH_IDX to be more stable.
+            if config.TRAIN.WD_SEARCH_LEFT:
+                config.TRAIN.WD = l2_lambda_list[left]
+            else:
+                config.TRAIN.WD = l2_lambda_list[idx]
 
             try:
                 best_score_ = train_task(train_dataloader, val_dataloader, config, sweep_run=True)
