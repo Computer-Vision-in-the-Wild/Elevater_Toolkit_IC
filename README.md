@@ -14,7 +14,7 @@ Please follow the steps below to use this codebase to reproduce the results in t
 4. [Evaluation](#evaluation)
     1. [Zero-shot](#zero-shot-evaluation)
     2. [Linear probe / Fine-tuning (Few-shot & Full-shot)](#linear-probe-and-fine-tuning)
-5. [Submit your results to vision leaderboard](#submit-your-results-to-vision-leaderboard)
+5. [Submit your results to vision leaderboard](#submit-to-leaderboard)
 
 
 ## Installation
