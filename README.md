@@ -142,6 +142,10 @@ python commands/prepare_submit.py \
   --combine_path /path_to_predictions
 ```
 
+### Examples of Prediction Files
+Please check out the format illustration and examples for prediction files in [submission_file_readme.md](submission_file_readme.md)
+
+
 ### Submit to EvalAI
 
 - Go to our [challenge page](https://eval.ai/web/challenges/challenge-page/1832/overview) on EvalAI, and register a team
