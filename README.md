@@ -32,7 +32,7 @@ pip install -e .
 
 ## Datasets
 
-We support the downstream evaluation of image classification on 20 datasets: `Caltech101`, `CIFAR10`, `CIFAR100`, `Country211`, `DTD`, `EuroSat`, `FER2013`, `FGVCAircraft`, `Food101`, `GTSRB`, `HatefulMemes`, `KittiDistance`, `MNIST`, `Flowers102`, `OxfordPets`, `PatchCamelyon`, `SST2`, `RESISC45`, `StanfordCars`, `VOC2007`.
+We support the downstream evaluation of image classification on 20 datasets: `Caltech101`, `CIFAR10`, `CIFAR100`, `Country211`, `DTD`, `EuroSat`, `FER2013`, `FGVCAircraft`, `Food101`, `GTSRB`, `HatefulMemes`, `KittiDistance`, `MNIST`, `Flowers102`, `OxfordPets`, `PatchCamelyon`, `SST2`, `RESISC45`, `StanfordCars`, `VOC2007`. Our toolkit also supports  `ImageNet-1K` evaluation, whose result is shown as reference on the leaderboard.
 
 To evaluate on these datasets, our toolkit *automatically* downloads these datasets once with [`vision-datasets`](https://github.com/microsoft/vision-datasets) and store them locally for the future usage.  You do **NOT** need to explicitly download any datasets. However, if you are interested in downloading all data before running experiments, please refer to [[Data Download]](https://github.com/Computer-Vision-in-the-Wild/DataDownload).
 
