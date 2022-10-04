@@ -556,4 +556,26 @@
     },
     "num_classes": 2
   }
+  {
+    "name": "imagenet-1k",
+    "version": 1,
+    "description": "imagenet 1k dataset (test only). Copy from Chunyuan's team",
+    "type": "classification_multiclass",
+    "root_folder": "classification/imagenet_1k_20220105",
+    "format": "coco",
+    "train": {
+      "index_path": "train.json",
+      "files_for_local_usage": [
+        "train_images.zip"
+      ],
+      "num_images": 0
+    },    
+    "test": {
+        "index_path": "val.json",
+        "files_for_local_usage": [
+            "val_images.zip"
+        ],
+        "num_images": 50000
+    }
+  }  
 ]
