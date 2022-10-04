@@ -555,7 +555,7 @@
       "num_images": 500
     },
     "num_classes": 2
-  }
+  },
   {
     "name": "imagenet-1k",
     "version": 1,
