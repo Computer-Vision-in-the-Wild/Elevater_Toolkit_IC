@@ -48,7 +48,7 @@ where the key-value pairs in the prediction dictionary are :
 - `model_name` specify the model name. It will not appear on the leaderboard, the user can customize the model name when filling the survey in submission.
 - `dataset_name`: the current dataset for evaluation.
 - `num_trainable_params`: the number of trainable parameters in model adaptation stage (type=int); For zero-shot learning, the model is frozen, and thus num_trainable_params = 0.
-- `num_params`: `num_backbone_params` + `num_average_head_params` (type=int), where num_average_head_params is the number of parameters in prediction head.
+- `num_params`: `num_backbone_params` + `num_average_head_params` (type=int), where num_average_head_params is the number of parameters in prediction head.  Note that `num_average_head_params = head_dim * average(#cls_ds1, #cls_ds2, ..., #cls_ds20)`.
 - `num_visual_params`: the number of parameters in the image encoder of the pre-trained model (type=int).
 - `num_backbone_params`: the number of all parameters in the pre-trained model (type=int).
 - `n_shot`: the number of training images per class in model adaptation stage (type=int); For zero-shot learning, no training images are used, and thus n_shot = 0.
