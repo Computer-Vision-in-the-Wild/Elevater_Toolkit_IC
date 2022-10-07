@@ -32,7 +32,6 @@ def add_linear_probing_args(parser):
     parser.add_argument('--submit-by', help='Person who submits the results.', type=str)
 
     parser.add_argument('--no-tuning', help='No hyperparameter-tuning.', default=False, type=lambda x:x.lower()=="true")
-    parser.add_argument('--emulate-zeroshot', help='Emulate zero shot learning.', default=False, type=str)
     parser.add_argument('--l2', help='(Inverse) L2 regularization strength. This option is only useful when option --no-tuning is True.', default=0.316, type=float)
     parser.add_argument('--lr', help='Test with a specific learning rate. This option is only useful when option --no-tuning is True.', default=0.001, type=float)
     parser.add_argument('--run', help='Run id', default=1, type=int)
@@ -65,15 +64,6 @@ def main():
         np.random.seed(args.fix_seed)
         torch.manual_seed(args.fix_seed)
         torch.cuda.manual_seed_all(args.fix_seed)
-
-    if args.emulate_zeroshot:
-        args.no_tuning = True
-        config.defrost()
-        config.TRAIN.END_EPOCH = 1
-        config.TRAIN.EXTRA_FINAL_TRAIN_EPOCH = 0
-        config.DATASET.NUM_SAMPLES_PER_CLASS = 0
-        config.TRAIN.EMULATE_ZERO_SHOT = True
-        config.freeze()
 
     n_samples = str(config.DATASET.NUM_SAMPLES_PER_CLASS) if config.DATASET.NUM_SAMPLES_PER_CLASS >= 0 else 'full'
     exp_name = 'linear_probe_' + n_samples

@@ -264,8 +264,7 @@ def train_task(train_dataloader, test_dataloader, config, sweep_run=False):
         adjust_learning_rate(optimizer, epoch, config)
 
         # train for one epoch
-        if not config.TRAIN.EMULATE_ZERO_SHOT:
-            train_one(train_dataloader, model, criterion, optimizer, epoch, config)
+        train_one(train_dataloader, model, criterion, optimizer, epoch, config)
 
         # evaluate on validation set
         acc1, logits = validate(test_dataloader, model, criterion, epoch, config, return_logits=True)
