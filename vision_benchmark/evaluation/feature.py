@@ -323,7 +323,7 @@ def extract_feature(model, data_loader, config):
     model.eval()
 
     # Generate model statistics
-    visual_backbone = model.visual if model.visual is not None else model
+    visual_backbone = model.visual if hasattr(model, 'visual') else model
     model_info = config.MODEL.STATS
     config.defrost()
     model_info['n_visual_params'] = sum(p.numel() for p in visual_backbone.parameters())
