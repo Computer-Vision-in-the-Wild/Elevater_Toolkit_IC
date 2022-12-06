@@ -16,3 +16,4 @@ transformers~=4.11.3
 protobuf~=3.20.1
 ftfy~=6.1.1
 nltk~=3.7
+openai # to call gpt3 for knowledge extraction
