@@ -15,7 +15,7 @@ Please follow the steps below to use this codebase to reproduce the results in t
     1. [Zero-shot](#zero-shot-evaluation)
     2. [Linear probe / Fine-tuning (Few-shot & Full-shot)](#linear-probe-and-fine-tuning)
 5. [Submit your results to vision leaderboard](#submit-to-leaderboard)
-
+6. [Extract GPT3 Knowledge](#extract-gpt3-knowledge)
 
 ## Installation
 
@@ -158,6 +158,18 @@ Please check out the format illustration and examples for prediction files in [s
 ### View Leaderboard
 
 Navigate to [Leaderboard](https://eval.ai/web/challenges/challenge-page/1832/leaderboard) tab to view all baseline results and results from the community.
+
+### Extract GPT3 Knowledge
+
+Modify these three lines accordingly in [run_gpt3.sh](./run_gpt3.sh), and run `sh run_gpt3.sh`
+
+```
+OUTPUT_DIR=./output/exp_1_extract_knowledge  # the path that the generated gpt3 knowledge is saved
+apikey=XXXX # Please use your GPT3 API key 
+ds='cifar10' 
+```
+
+
 
 ## Citation
 
