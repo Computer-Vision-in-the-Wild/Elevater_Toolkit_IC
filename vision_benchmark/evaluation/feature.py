@@ -366,7 +366,7 @@ def multiclass_to_int(indices):
 def extract_features(config, feature_type="image", test_split_only=False):
     model = get_model(config, feature_type=feature_type)
 
-    train_dataloader, val_dataloader, test_dataloader = construct_dataloader(config, feature_type="image", test_split_only=False)
+    train_dataloader, val_dataloader, test_dataloader = construct_dataloader(config, feature_type="image", test_split_only=test_split_only)
 
     test_features, test_labels = extract_feature(model, test_dataloader, config)
     if test_split_only:
@@ -575,6 +575,7 @@ def construct_dataloader(config, feature_type="image", test_split_only=False):
             def transform_clip(x, y):
                 return (previous_transform(x), multiclass_to_int(y))
 
+        train_dataloader = val_dataloader = None
         test_dataloader = get_dataloader(TorchDataset(ManifestDataset(test_set_dataset_info, test_set), transform=transform_clip))
         # download train/val split only if test_split_only is False
         if not test_split_only:
@@ -597,6 +598,7 @@ def construct_dataloader(config, feature_type="image", test_split_only=False):
             train_dataloader, val_dataloader = get_dataloader(TorchDataset( ManifestDataset(train_set_dataset_info, train_set), transform=transform_clip), val_split=val_split)
             logging.info(f'Val split from Train set: Train size is {len(train_set.images)*(1-val_split)}, and validation size is {len(train_set.images)*val_split}.')
     else:
+        train_dataloader = val_dataloader = None
         if not test_split_only:
             if config.DATASET.VAL_SET:
                 train_dataloader = get_dataloader(torchvision.datasets.ImageFolder(os.path.join(config.DATASET.ROOT, config.DATASET.TRAIN_SET), transform=transform_clip))

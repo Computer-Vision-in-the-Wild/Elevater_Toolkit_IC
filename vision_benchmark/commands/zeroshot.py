@@ -22,7 +22,7 @@ def add_zero_shot_args(parser):
     parser.add_argument('--ds', required=False, help='Evaluation dataset configure file name.', type=str)
     parser.add_argument('--model', required=True, help='Clip model configure file name', type=str)
     parser.add_argument('--text_feature_only', help='consider text feature or not.', default=False, action='store_true')
-    parser.add_argument('--save-predictions', help='save predictions logits for analysis.', default=True, action='store_true')
+    parser.add_argument('--save-predictions', help='save predictions logits for analysis.', default=True, type=lambda x: (str(x).lower() == 'true'))
     parser.add_argument('opts',
                         help="Modify config options using the command-line",
                         default=None,
