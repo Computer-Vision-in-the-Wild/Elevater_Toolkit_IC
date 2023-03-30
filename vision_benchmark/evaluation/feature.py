@@ -222,7 +222,12 @@ def load_custom_zeroshot_model(config):
     model_file = config.TEST.MODEL_FILE
     logging.info(f'=> load model file: {model_file}')
     ext = model_file.split('.')[-1]
-    if ext == 'pth' or ext == 'pt':
+    if model_file.startswith('hf:'):
+        from huggingface_hub import hf_hub_download
+        _, hf_repo, hf_file = model_file.split(':')
+        cache_file = hf_hub_download(repo_id=hf_repo, filename=hf_file)
+        state_dict = torch.load(cache_file, map_location='cpu')
+    elif ext == 'pth' or ext == 'pt':
         state_dict = torch.load(model_file, map_location="cpu")
     elif ext == 'pkl':
         logging.info('=> load pkl model')
