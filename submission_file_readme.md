@@ -2,7 +2,7 @@
 ## Submssion File Format for Zero-shot
 
 #### Final submission file
-The final submission file is a ``json`` file (or its zip format), which is the merged result from the prediction files from all 20 datasets (or 21 datasets if ImageNet is considered in submission). The submission json file is contains a dictionary. You can check out [``all_predictions.zip``](https://cvinthewildeus.blob.core.windows.net/datasets/submission_files/all_predictions_klite_gpt3.zip) as one submission example that successfully passes the evaluation pipeline on the server. We illustrate the dictionary format using the pseudo example below.
+The final submission file is a ``json`` file (or its zip format), which is the merged result from the prediction files from all 20 datasets (or 21 datasets if ImageNet is considered in submission). The submission json file is contains a dictionary. You can check out [``all_predictions.zip``](https://cvinthewildeus.blob.core.windows.net/datasets/submission_files/all_predictions_klite_gpt3.zip?sp=r&st=2023-08-28T01:41:20Z&se=3023-08-28T09:41:20Z&sv=2022-11-02&sr=c&sig=Msoq5dIl%2Fve6F01edGr8jgcZUt7rtsuJ896xvstSNfM%3D) as one submission example that successfully passes the evaluation pipeline on the server. We illustrate the dictionary format using the pseudo example below.
 It consists of prediction results from 21 datasets (including ImageNet-1K).
 ```json
 {"data": 
@@ -37,7 +37,7 @@ It consists of prediction results from 21 datasets (including ImageNet-1K).
 
 The above ``all_predictions.zip`` is merged from 21 per-dataset predition results, using [``prepare_submit.py``](https://github.com/Computer-Vision-in-the-Wild/Elevater_Toolkit_IC/blob/main/vision_benchmark/commands/prepare_submit.py). 
 For each dataset, we first produce a prediction json file, by activating ``--save-predictions`` in [``zeroshot.py``](https://github.com/Computer-Vision-in-the-Wild/Elevater_Toolkit_IC/blob/main/vision_benchmark/commands/zeroshot.py). 
-If we use CIFAR-10 dataset for example, the generated prediction file is [``cifar-10.json``](https://cvinthewildeus.blob.core.windows.net/datasets/submission_files/cifar-10.json). We illustrate the dictionary format using the pseudo example below.
+If we use CIFAR-10 dataset for example, the generated prediction file is [``cifar-10.json``](https://cvinthewildeus.blob.core.windows.net/datasets/submission_files/cifar-10.json?sp=r&st=2023-08-28T01:41:20Z&se=3023-08-28T09:41:20Z&sv=2022-11-02&sr=c&sig=Msoq5dIl%2Fve6F01edGr8jgcZUt7rtsuJ896xvstSNfM%3D). We illustrate the dictionary format using the pseudo example below.
 
 ```json
 {"model_name": "CLIP-clip_swin", "dataset_name": "cifar-10", "num_trainable_params": 0, "num_params": 150695609, "num_visual_params": 86743224, "num_backbone_params": 150695609, "n_shot": 0, "rnd_seeds": [0], "predictions": "prediction probability tensor [size: (1, 10000, 10)]"}

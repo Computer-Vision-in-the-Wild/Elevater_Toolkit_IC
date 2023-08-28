@@ -558,7 +558,7 @@ def construct_dataloader(config, feature_type="image", test_split_only=False):
     hub = get_dataset_hub()
     dataset_names = set([x['name'] for x in hub.list_data_version_and_types()])
     if config.DATASET.DATASET in dataset_names:
-        vision_dataset_storage = 'https://cvinthewildeus.blob.core.windows.net/datasets'
+        vision_dataset_storage = 'https://cvinthewildeus.blob.core.windows.net/datasets?sp=r&st=2023-08-28T01:41:20Z&se=3023-08-28T09:41:20Z&sv=2022-11-02&sr=c&sig=Msoq5dIl%2Fve6F01edGr8jgcZUt7rtsuJ896xvstSNfM%3D'
         local_temp = config.DATASET.ROOT
 
         # return [manifest, dataset_info, downloader_resources]
