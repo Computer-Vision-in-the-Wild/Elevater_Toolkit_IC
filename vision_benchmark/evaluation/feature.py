@@ -314,6 +314,27 @@ def get_model(config, feature_type='image'):
             else:
                 raise Exception('Incorrect model type.')
             logging.info(f'Using CLIP pretrained model {model_name}, input size {model.visual.input_resolution}')
+
+            if len(config.TEST.MODEL_FILE) > 0:
+                logging.info(f'Special CLIP checkpoint specified, loading: {config.TEST.MODEL_FILE}')
+                model_file = config.TEST.MODEL_FILE
+                if model_file.startswith('hf:'):
+                    from huggingface_hub import hf_hub_download
+                    _, hf_repo, hf_file = model_file.split(':')
+                    cache_file = hf_hub_download(repo_id=hf_repo, filename=hf_file)
+                    checkpoint = torch.load(cache_file, map_location='cpu')
+                elif model_file.startswith('http'):
+                    checkpoint = torch.hub.load_state_dict_from_url(model_file, progress=False, map_location="cpu")
+                else:
+                    checkpoint = torch.load(model_file, map_location="cpu")
+
+                incompatible = model.load_state_dict(checkpoint, strict=False)
+
+                if incompatible.missing_keys:
+                    logging.warning('Missing keys: {}'.format(', '.join(incompatible.missing_keys)))
+                if incompatible.unexpected_keys:
+                    logging.warning('Unexpected keys: {}'.format(', '.join(incompatible.unexpected_keys)))
+                logging.info(f'Special CLIP checkpoint loaded: {config.TEST.MODEL_FILE}')
         else:
             raise ValueError(f'Unknown model name {model_name}.')
 
